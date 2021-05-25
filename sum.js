@@ -8,12 +8,43 @@ console.log('args:', args);
 
 // Single-responsibility principle => a function should do a single thing
 
-convertToNum = function(nums) {
+convertToNum = function (nums) {
   const ouputNums = [];
 
+  for (let num of nums) {
+    ouputNums.push(Number(num));
+  }
 
   return ouputNums;
-}
+};
+
+const allNums = function (nums) {
+  for (let num of nums) {
+    // Edge case: If any argument is not a number, output an error message
+    if (isNaN(num)) {
+      console.log('Please enter only numbers');
+      //stop the execution
+      process.exit();
+    }
+  }
+  return nums;
+};
+
+const allInt = function (nums) {
+  const ouputNums = [];
+
+  for (let num of nums) {
+    // Edge case: If any argument is not a whole number, skip it
+    if (Number.isInteger(num)) {
+      ouputNums.push(Number(num));
+    }
+  }
+
+  return ouputNums;
+};
+
+// Sum: 
+// goal get a list of numbers and add them up, return the sum
 
 const sum = function (numbers) {
   //accumulator
@@ -21,29 +52,16 @@ const sum = function (numbers) {
 
   // goes through each
   for (let num of numbers) {
-    // Edge case: If any argument is not a whole number, skip it
+    // Add them up
+    // total <- total + nb
+    total += num;
 
-    // convert str to number
-    const nb = Number(num);
-    // Edge case: If any argument is not a number, output an error message
-    if (isNaN(nb)) {
-      console.log('Please enter only numbers');
-      //stop the execution
-      process.exit();
-    }
-    // if (num % 1 === 0) {
-    if (Number.isInteger(nb)) {
-      // Add them up
-      // total <- total + nb
-      total += nb;
-    }
-
-    console.log('num:', nb, typeof nb, 'Total:', total);
+    console.log('num:', num, typeof num, 'Total:', total);
   }
 
   return total;
 };
 
 // prints out the sum
-const result = sum(args);
+const result = sum(allInt(allNums(convertToNum(args))));
 console.log(`Sum: ${result}`);
