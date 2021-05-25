@@ -2,9 +2,15 @@
 
 // takes in an unlimited number of command line arguments
 // Edge case: We need at least 2 arguments.
-const args = process.argv.slice(2);
 
-console.log('args:', args);
+const getArguments = function () {
+  const args = process.argv.slice(2);
+  if (args.length < 2) {
+    console.log('please add at least 2 arguments');
+    process.exit();
+  }
+  return args;
+};
 
 // Single-responsibility principle => a function should do a single thing
 
@@ -43,7 +49,7 @@ const allInt = function (nums) {
   return ouputNums;
 };
 
-// Sum: 
+// Sum:
 // goal get a list of numbers and add them up, return the sum
 
 const sum = function (numbers) {
@@ -63,5 +69,5 @@ const sum = function (numbers) {
 };
 
 // prints out the sum
-const result = sum(allInt(allNums(convertToNum(args))));
+const result = sum(allInt(allNums(convertToNum(getArguments()))));
 console.log(`Sum: ${result}`);
